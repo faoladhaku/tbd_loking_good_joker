@@ -1,0 +1,236 @@
+la carga de datos a tardado: 111.889s
+START: 
+16006
+option: -1
+ K : 5
+Recomendacion: 10
+KNNN
+1.00003  --  123250
+1.00001  --  136420
+1.00001  --  130242
+1.00001  --  140141
+1.00001  --  51639
+207854
+RECOM : knn size:  207854
+RECOMENDACION 10 tam 
+Dancer in the Dark (2000) punt 5
+"Equalizer punt 5
+Simple Simon (I rymden finns inga känslor) (2010) punt 4.5
+Juno (2007) punt 4.5
+"Beautiful Mind punt 4.5
+Interstellar (2014) punt 4.5
+Schindler's List (1993) punt 4
+Needful Things (1993) punt 3
+Sherlock: The Abominable Bride (2016) punt 2.5
+"Streetcar Named Desire punt 2
+la consulta a tardado: 67.2195s
+TAM: 10
+***************************
+283228
+option: -2
+ K : 8
+Recomendacion: 10
+KNNN
+0.331771  --  173357
+0.305973  --  220018
+0.29549  --  140027
+0.285821  --  61675
+0.284196  --  90934
+0.27581  --  147607
+0.274997  --  112712
+0.27381  --  8369
+176185
+RECOM : knn size:  176185
+RECOMENDACION 10 tam 
+"Godfather: Part II punt 5
+"Princess Bride punt 5
+Cinema Paradiso (Nuovo cinema Paradiso) (1989) punt 5
+Bambi Meets Godzilla (1969) punt 5
+Monty Python and the Holy Grail (1975) punt 5
+Dial M for Murder (1954) punt 5
+"Fish Called Wanda punt 5
+"Murder punt 5
+Gravity (2013) punt 5
+"Sound of Music punt 5
+la consulta a tardado: 74.0309s
+TAM: 10
+***************************
+30503
+option: 2
+ K : 10
+Recomendacion: 10
+KNNN
+2.73861  -  141614
+4.12311  -  141616
+5.19615  -  141617
+5.33854  -  141619
+6.22495  -  141620
+6.55744  -  141621
+6.72681  -  141622
+6.96419  -  212422
+7.03562  -  212423
+9.3675  -  212424
+134341
+RECOM : knn size:  134341
+RECOMENDACION 10 tam 
+Billy Madison (1995) punt 5
+Apollo 13 (1995) punt 5
+Sneakers (1992) punt 5
+Dead Poets Society (1989) punt 5
+Annie Hall (1977) punt 5
+"Third Man punt 5
+Bonnie and Clyde (1967) punt 5
+"Great Escape punt 4.5
+Chinatown (1974) punt 4
+Star Trek V: The Final Frontier (1989) punt 2
+la consulta a tardado: 34.8503s
+TAM: 10
+***************************
+4598
+option: -1
+ K : 10
+Recomendacion: 10
+KNNN
+1.00001  --  127995
+1.00001  --  280506
+1.00001  --  212104
+1.00001  --  31076
+1  --  202460
+1  --  207507
+1  --  207453
+1  --  211131
+1  --  191928
+1  --  201004
+70241
+RECOM : knn size:  70241
+RECOMENDACION 10 tam 
+Equilibrium (2002) punt 5
+"Shawshank Redemption punt 5
+Princess Mononoke (Mononoke-hime) (1997) punt 5
+Good Will Hunting (1997) punt 5
+Guardians of the Galaxy (2014) punt 5
+Braveheart (1995) punt 5
+Gravity (2013) punt 5
+Die Hard (1988) punt 5
+Star Trek Into Darkness (2013) punt 5
+Toy Story (1995) punt 4.5
+la consulta a tardado: 34.9638s
+TAM: 10
+***************************
+16006
+option: -2
+ K : 5
+Recomendacion: 10
+KNNN
+0.752666  --  53960
+0.557816  --  238044
+0.555877  --  228773
+0.554152  --  205855
+0.553989  --  56484
+238779
+RECOM : knn size:  238779
+RECOMENDACION 10 tam 
+Tommy Boy (1995) punt 5
+Rob Roy (1995) punt 5
+"English Patient punt 5
+Boyhood (2014) punt 5
+"Grand Budapest Hotel punt 5
+Bananas (1971) punt 5
+"Hobbit: The Desolation of Smaug punt 5
+Swingers (1996) punt 5
+World War Z (2013) punt 5
+Mary Poppins (1964) punt 4.5
+la consulta a tardado: 574.721s
+TAM: 10
+***************************
+283228
+option: -2
+ K : 8
+Recomendacion: 10
+KNNN
+0.331771  --  173357
+0.305973  --  220018
+0.29549  --  140027
+0.285821  --  61675
+0.284196  --  90934
+0.27581  --  147607
+0.274997  --  112712
+0.27381  --  8369
+176185
+RECOM : knn size:  176185
+RECOMENDACION 10 tam 
+"Godfather: Part II punt 5
+"Princess Bride punt 5
+Cinema Paradiso (Nuovo cinema Paradiso) (1989) punt 5
+Bambi Meets Godzilla (1969) punt 5
+Monty Python and the Holy Grail (1975) punt 5
+Dial M for Murder (1954) punt 5
+"Fish Called Wanda punt 5
+"Murder punt 5
+Gravity (2013) punt 5
+"Sound of Music punt 5
+la consulta a tardado: 76.1684s
+TAM: 10
+***************************
+30503
+option: 2
+ K : 10
+Recomendacion: 10
+KNNN
+2.73861  -  141614
+4.12311  -  141616
+5.19615  -  141617
+5.33854  -  141619
+6.22495  -  141620
+6.55744  -  141621
+6.72681  -  141622
+6.96419  -  70816
+7.03562  -  212423
+9.3675  -  212424
+134343
+RECOM : knn size:  134343
+RECOMENDACION 10 tam 
+Billy Madison (1995) punt 5
+Apollo 13 (1995) punt 5
+Sneakers (1992) punt 5
+Dead Poets Society (1989) punt 5
+Annie Hall (1977) punt 5
+"Third Man punt 5
+Bonnie and Clyde (1967) punt 5
+"Great Escape punt 4.5
+Chinatown (1974) punt 4
+Star Trek V: The Final Frontier (1989) punt 2
+la consulta a tardado: 35.7565s
+TAM: 10
+***************************
+4598
+option: -2
+ K : 10
+Recomendacion: 10
+KNNN
+0.425161  --  153029
+0.423333  --  74418
+0.41889  --  161646
+0.412677  --  155696
+0.410493  --  150115
+0.409632  --  36542
+0.406964  --  29760
+0.402783  --  192652
+0.402695  --  124951
+0.401608  --  156795
+155278
+RECOM : knn size:  155278
+RECOMENDACION 10 tam 
+Léon: The Professional (a.k.a. The Professional) (Léon) (1994) punt 5
+Goodfellas (1990) punt 5
+Monty Python and the Holy Grail (1975) punt 5
+Whiplash (2014) punt 5
+Birdman: Or (The Unexpected Virtue of Ignorance) (2014) punt 5
+"Grand Budapest Hotel punt 5
+Prisoners (2013) punt 5
+"Shawshank Redemption punt 4.75
+Dead Poets Society (1989) punt 4.5
+Star Wars: Episode V - The Empire Strikes Back (1980) punt 4.5
+la consulta a tardado: 52.7527s
+TAM: 10
+***************************
