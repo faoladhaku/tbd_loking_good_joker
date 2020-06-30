@@ -4,6 +4,37 @@ import math
 import time
 from collections import defaultdict
 import datetime
+import sys
+###Preprocessing split the simple files into various files
+# making posible to manipulate them
+def preprocessing(path,prepath):
+    a = pd.read_csv(path)
+    a = a.fillna("nan")
+    ###user id created
+    itercols = iter(a.columns)
+    my_user_id = range(1,len(a.columns))
+    next(itercols)
+    names = [[number_user,name_user] for (number_user,name_user) in zip(my_user_id,itercols)]
+    names_id = pd.DataFrame(names,columns=['userId','name'])
+    names_id.to_csv(prepath+"user.csv",index=False)
+    #print(names_id)
+    ###move id created
+    iterows = iter(a.iloc[:,0])
+    my_movie_id = range(1,len(a.iloc[:,0])+1)
+    movies = [[number_movie,name_movie] for (number_movie,name_movie) in zip(my_movie_id,iterows)]
+    movies_id = pd.DataFrame(movies,columns=['movieId','title'])
+    movies_id.to_csv(prepath+"movie.csv",index=False)
+    #print(movies_id)
+    ###making ratings
+    my_ratings_id = []
+    for i in range(1,len(a.columns)):
+        for j in range(len(a.iloc[:,0])):
+            if(a.iloc[:,i][j]!="nan"):
+                #print(a.iloc[:,i][j],i,j+1)
+                my_ratings_id.append([i,j+1,a.iloc[:,i][j]])
+    ratings_id = pd.DataFrame(my_ratings_id,columns=['userId','movieId','rating'])
+    ratings_id.to_csv(prepath+"ratings.csv",index=False)
+    #print(ratings_id)
 def manhattan(x,y):
     suma = 0
     for i in range(len(x)):
@@ -75,6 +106,13 @@ def sim_cos(x,y):
         return 0.0
     calculo = mult_xy/(long_x*long_y)
     return calculo
+def jaccard(x,y,n):
+    if(n!=0):
+        return float(n-len(x)) / n
+    else:
+        print("No existe ningun elemento similar")
+def knn():
+    pass
 ###Simple Distance
 # Takes the data rating for the users and keeps the intersected keys, that intersected keys is used to calculate the distances 
 def simple_distance(idusuario1,idusuario2,id_type_distance,all_rating_dictionary):
@@ -99,6 +137,9 @@ def simple_distance(idusuario1,idusuario2,id_type_distance,all_rating_dictionary
         print("The value of the pearson distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",pearson(values1,values2))
     if(id_type_distance==5):
         print("The value of the cosine similarity distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",sim_cos(values1,values2))
+    if(id_type_distance==6):
+            union = (len(aux_dict1)+len(aux_dict2))-len(intersection)
+            print("The value of the jaccard distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",jaccard(values1,values2,union))
 ###Loading the data using chunks
 # the time is relatively  high, that because it search for every user thats save in all the chunks, but its more scalable because
 # load the data in chunks, and its not going to overburden the memory 
@@ -146,9 +187,28 @@ def load_bd_method2(path):
     rating = my_dict_rating.groupby('userId')[['movieId','rating']].apply(lambda g: g.values.tolist()).to_dict()
     return rating
 
-path ='100k/ratings.csv'
 
 print("Welcome to the recomendator artubasuyaras")
+print("Select the database to be used")
+print("1.-Practice Database")
+print("2.-Large Practice Database")
+print("3.-Books Database,not implemented")
+print("4.-Movie Lens 100k database") 
+database_id = int(input())
+if(database_id==1):
+    preprocessing_path = "little_bd/laboratorio1.csv"
+    prepath = "little_bd/"
+    preprocessing(preprocessing_path,prepath)
+    path = "little_bd/ratings.csv"
+if(database_id==2):
+    preprocessing_path = "large_bd/laboratorio1_large.csv"
+    prepath = "large_bd/"
+    preprocessing(preprocessing_path,prepath)
+    path = "large_bd/ratings.csv"
+if(database_id==3):
+    sys.exit("Not implemented yet")
+if(database_id==4):
+    path = "100k/ratings.csv"
 print("Select the method to load the bd")
 print("1.-Using Chunks")
 print("2.-Without Chunks") 
@@ -174,6 +234,7 @@ if(id_action==1):
     print("3.-Calculate Minkowski")
     print("4.-Calculate Pearson")
     print("5.-Calculate Cosine similarity")
+    print("6.-Calculate Jaccard")
     id_distance = int(input())
     id_user1= int(input("user 1: "))
     id_user2= int(input("user 2: "))
@@ -182,4 +243,6 @@ if(id_action==1):
     b = datetime.datetime.now()
     print("my time to find intersection and to calculate a simple distance: ",b-a)
 elif(id_action==2):
-    pass
+    sys.exit("Not implemented yet")
+    knn()
+
