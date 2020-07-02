@@ -5,6 +5,7 @@ import time
 from collections import defaultdict
 import datetime
 import sys
+import numpy as np
 ###Preprocessing split the simple files into various files
 # making posible to manipulate them
 def preprocessing(path,prepath):
@@ -111,11 +112,10 @@ def jaccard(x,y,n):
         return float(n-len(x)) / n
     else:
         print("No existe ningun elemento similar")
-def knn():
-    pass
+
 ###Simple Distance
 # Takes the data rating for the users and keeps the intersected keys, that intersected keys is used to calculate the distances 
-def simple_distance(idusuario1,idusuario2,id_type_distance,all_rating_dictionary):
+def simple_distance(idusuario1,idusuario2,id_type_distance,all_rating_dictionary,print=True):
     aux_dict1=dict( ( movie[0],movie[1:]) for movie in all_rating_dictionary[idusuario1] )
     aux_dict2=dict( ( movie[0],movie[1:]) for movie in all_rating_dictionary[idusuario2] )
     keys_a = set( aux_dict1.keys() )
@@ -124,22 +124,51 @@ def simple_distance(idusuario1,idusuario2,id_type_distance,all_rating_dictionary
     values1 = [aux_dict1.get(movie_id) for movie_id in intersection]
     values2 = [aux_dict2.get(movie_id) for movie_id in intersection]
     if(len(intersection)==0):
-        print("There is no same movies between user ",idusuario1,"and ",idusuario2)
+        if(print==True):
+            print("There is no same movies between user ",idusuario1,"and ",idusuario2)
         return 
     if(id_type_distance==1):
-        print("The value of the manhattan distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",manhattan(values1,values2))
+        if(print==True):
+            print("The value of the manhattan distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",manhattan(values1,values2))
+        return manhattan(values1,values2)
     if(id_type_distance==2):
-        print("The value of the euclidian distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",euclidian(values1,values2))
+        if(print==True):
+            print("The value of the euclidian distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",euclidian(values1,values2))
+        return euclidian(values1,values2)
     if(id_type_distance==3):
         n_value = int(input("Value for n, 1 or 2: "))
-        print("The value of the minkowski distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",minkowski(values1,values2,n_value))
+        if(print==True):
+            print("The value of the minkowski distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",minkowski(values1,values2,n_value))
+        return minkowski(values1,values2,n_value)
     if(id_type_distance==4):
-        print("The value of the pearson distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",pearson(values1,values2))
+        if(print==True):
+            print("The value of the pearson distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",pearson(values1,values2))
+        return pearson(values1,values2)
     if(id_type_distance==5):
-        print("The value of the cosine similarity distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",sim_cos(values1,values2))
+        if(print==True):
+            print("The value of the cosine similarity distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",sim_cos(values1,values2))
+        return sim_cos(values1,values2)
     if(id_type_distance==6):
-            union = (len(aux_dict1)+len(aux_dict2))-len(intersection)
+        union = (len(aux_dict1)+len(aux_dict2))-len(intersection)
+        if(print==True):
             print("The value of the jaccard distance between the user ",idusuario1,"and the user ",idusuario2,"is: ",jaccard(values1,values2,union))
+        return jaccard(values1,values2,union)
+###Simple N neighbors, return a vector of vectors where the first element its
+#the resulting value, and the id of the neighbor 
+def knn(idusuario,number_neighbors,id_type_distance,rating):
+    print(len(rating))
+    distances = np.empty((0,2))
+    noprint=False
+    for i in range(1,len(rating)+1):
+        if(i == idusuario):
+            continue
+        distances = np.append(distances,[[simple_distance(idusuario,i,id_type_distance,rating,noprint),i]],axis=0)
+    if(id_type_distance>=1 and id_type_distance<4 or id_type_distance==6):
+        distances = distances[np.argsort(distances[:,0])]
+    elif(id_type_distance==4 or id_type_distance==5):
+        distances = distances[np.argsort(distances[:,0])[::-1][:distances.shape[0]]]
+    print("The",number_neighbors,"best neighbors are: ",distances[:number_neighbors])
+    return distances[:number_neighbors]
 ###Loading the data using chunks
 # the time is relatively  high, that because it search for every user thats save in all the chunks, but its more scalable because
 # load the data in chunks, and its not going to overburden the memory 
@@ -186,6 +215,21 @@ def load_bd_method2(path):
     #dictionary =  my_dict_rating.set_index('userId').T.to_dict('list')
     rating = my_dict_rating.groupby('userId')[['movieId','rating']].apply(lambda g: g.values.tolist()).to_dict()
     return rating
+def recomendation(idusuario,number_neighbors,id_type_distance,id_item_search,rating):
+    neighbors = knn(id_user,id_neighbors,id_distance,rating)
+    dict_user=dict( ( movie[0],movie[1:]) for movie in rating[idusuario] )
+    neighbors_sum_total = sum(neighbors[:,0])
+    print(neighbors_sum_total)
+    if(id_item_search in dict_user):
+        print("The movie is already rated")
+        return
+    predict_value = 0
+    for i in range(neighbors.shape[0]):
+        aux_dict=dict( ( movie[0],movie[1:]) for movie in rating[ neighbors[i][1] ] )
+        if( id_item_search in aux_dict ):
+            predict_value += aux_dict[id_item_search][0]*(neighbors[i][0]/neighbors_sum_total)
+    print("The value predicted is: ",predict_value)
+        
 
 
 print("Welcome to the recomendator artubasuyaras")
@@ -243,6 +287,25 @@ if(id_action==1):
     b = datetime.datetime.now()
     print("my time to find intersection and to calculate a simple distance: ",b-a)
 elif(id_action==2):
-    sys.exit("Not implemented yet")
-    knn()
+    print("Calculating knn first")
+    print("With what distance you want to calculate the KNN")
+    print("1.-Calculate Manhattan")
+    print("2.-Calculate Euclidian")
+    print("3.-Calculate Minkowski")
+    print("4.-Calculate Pearson")
+    print("5.-Calculate Cosine similarity")
+    print("6.-Calculate Jaccard")
+    id_distance = int(input())
+    id_user = int(input("set user: "))
+    id_neighbors = int(input("set number of neighbors: "))
+    print("How do you want to find the movie to predict")
+    print("1.-Name of the movie")
+    print("2.-ID of the movie")
+    election_item_search = int(input())
+    if(election_item_search==1):
+        sys.exit("Implementing")
+    elif(election_item_search==2):
+        id_item_search = int(input("Select the id: "))
+    recomendation(id_user,id_neighbors,id_distance,id_item_search,rating)
+    sys.exit("Implementing")
 
